@@ -1,0 +1,55 @@
+# API and Data Configuration
+api:
+  weatherbit:
+    url: "https://api.weatherbit.io/v2.0/history/daily"
+    api_key: "YOUR_API_KEY"  # Replace with your actual key
+    lat: 41.0811  # Latitude for Levent Metro Station
+    lon: 29.0118  # Longitude for Levent Metro Station
+
+s3:
+  bucket_name: "YOUR_BUCKET_NAME"
+  files:
+    transportation: "transitmotion/transportation_processed/daily_aggregated_transportation_m2.csv"
+    weather: "transitmotion/weather/weather_data.csv"
+    bank_holidays: "transitmotion/supporting_data/bank_holidays.xlsx"
+    bigthree_schedule: "transitmotion/supporting_data/bigthree_schedule.xlsx"
+    school_terms: "transitmotion/supporting_data/school_terms.xlsx"
+    ramadan: "transitmotion/supporting_data/ramadan.xlsx"
+
+features:
+  numerical:
+    - "precip"
+    - "wind_spd"
+    - "temperature"
+    - "relative_humidity"
+    - "clouds"
+    - "snow"
+    - "isBankHoliday"
+    - "fenerbahce"
+    - "besiktas"
+    - "galatasaray"
+    - "schoolsOpen"
+    - "isRamadan"
+  
+  categorical:
+    independent:
+      - "transfer_type"
+      - "transaction_type_desc"
+      - "product_kind"
+      - "station"
+    dependent:
+      - "day_of_week"
+      - "month"
+      - "year"
+
+model_settings:
+  test_size: 90  # days for holdout set
+  random_state: 42
+  stations: ["SISLI", "TAKSIM"]
+  models:
+    - "LinearRegression"
+    - "DecisionTreeRegressor"
+    - "RandomForestRegressor"
+    - "GradientBoostingRegressor"
+    - "XGBRegressor"
+    - "LGBMRegressor"
